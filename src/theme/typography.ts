@@ -1,15 +1,5 @@
-import { TypographyOptions } from '@mui/material/styles/createTypography';
- 
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {}
-}
- 
-interface MthTypographyOptions extends TypographyOptions {}
- 
-const typography: MthTypographyOptions = {
-  fontFamily: ['Roboto'].join(','),
+const typography = {
+  fontFamily: ['Montserrat', 'Roboto', 'Arial', 'sans-serif'].join(','),
 };
- 
+
 export default typography;
- 
- 
