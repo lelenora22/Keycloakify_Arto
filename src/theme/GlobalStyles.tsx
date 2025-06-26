@@ -6,6 +6,12 @@ const GlobalStyles = () => {
   return (
     <MUIGlobalStyles
       styles={{
+         body: {
+          backgroundColor: theme.palette.background.default,
+          color: theme.palette.text.primary,
+          margin: 0,
+          fontFamily: theme.typography.fontFamily,
+        },
         '*::-webkit-scrollbar': {
           width: '8px',
           height: '8px',

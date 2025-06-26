@@ -15,6 +15,7 @@ const lightVariant: VariantType = {
       main: '#ECE9EA',
     },
     background: {
+      default: '#ffffff',
       paper: '#fbfafa',
     },
     text: {
@@ -31,6 +32,10 @@ export const darkVariant: VariantType = {
     },
     secondary: {
       main: '#ECE9EA',
+    },
+    background: {
+      default: '#121212',
+      paper: '#232323',
     },
     text: {
       secondary: '#ED6C84',

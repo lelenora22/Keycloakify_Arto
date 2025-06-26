@@ -1,7 +1,7 @@
+import { Box, Button, TextField, Typography, styled } from "@mui/material";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import { TextField, Button, Box, Typography, styled, useTheme } from "@mui/material";
 import { PageProps } from "keycloakify/login/pages/PageProps";
+import * as Yup from "yup";
 import { I18n } from "../i18n";
 import { KcContext } from "../KcContext";
 
@@ -18,11 +18,33 @@ const StyledBox = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[800]}`,
 }));
  
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiInputBase-root': {
+    color: theme.palette.text.primary,
+  },
+  '& .MuiInputLabel-root': {
+    color: theme.palette.text.primary,
+  },
+  '& .MuiInputLabel-root.Mui-focused': {
+    color: theme.palette.text.primary,
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#888888',
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#888888',
+  },
+  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: '#888888',
+  },
+}));
+ 
+ 
 
 export default function Login(data: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
 const {kcContext, i18n} = data;
+//const {realm, login, registrationDisable, social} = kcContext;
     const { msgStr } = i18n;
-    const theme = useTheme();
 
   const formik = useFormik({
     initialValues: {
@@ -65,7 +87,7 @@ const {kcContext, i18n} = data;
         onSubmit={formik.handleSubmit}
         style={{ width: "100%", maxWidth: 400 }}
       >
-        <TextField
+        <StyledTextField
           fullWidth
           margin="normal"
           id="username"
@@ -77,7 +99,7 @@ const {kcContext, i18n} = data;
           helperText={formik.touched.username && formik.errors.username}
         />
 
-        <TextField
+        <StyledTextField
           fullWidth
           margin="normal"
           id="password"
