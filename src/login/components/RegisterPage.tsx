@@ -1,12 +1,10 @@
 import { Login as LoginIcon, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
     Avatar,
-    Box,
     Button,
     IconButton,
     InputAdornment,
     Stack,
-    styled,
     TextField,
     Typography
 } from "@mui/material";

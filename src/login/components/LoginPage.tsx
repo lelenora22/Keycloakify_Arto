@@ -1,23 +1,22 @@
+import { Login as LoginIcon, Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-    Box,
-    Button,
-    TextField,
-    Typography,
-    styled,
-    InputAdornment,
-    IconButton,
-    Avatar,
-    Grid,
-    Stack
+  Avatar,
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+  styled
 } from "@mui/material";
-import { useState } from "react";
-import { Visibility, VisibilityOff, Login as LoginIcon } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { PageProps } from "keycloakify/login/pages/PageProps";
+import { useState } from "react";
 import * as Yup from "yup";
+import ArtoIcon from "../../assets/ArtoIcon";
 import { I18n } from "../i18n";
 import { KcContext } from "../KcContext";
-import ArtoIcon from "../../assets/ArtoIcon";
 
 export const StyledBox = styled(Box)(({ theme }) => ({
     position: "absolute",

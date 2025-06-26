@@ -1,6 +1,6 @@
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { Box, IconButton, Stack, useTheme } from "@mui/material";
+import { IconButton, Stack, useTheme } from "@mui/material";
 import type { ClassKey } from "keycloakify/login";
 import DefaultPage from "keycloakify/login/DefaultPage";
 import Template from "keycloakify/login/Template";
@@ -10,7 +10,6 @@ import type { KcContext } from "./KcContext";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import { useI18n } from "./i18n";
-import bgLogin from "../assets/bgLogin.webp";
 
 const UserProfileFormFields = lazy(
     () => import("keycloakify/login/UserProfileFormFields")
