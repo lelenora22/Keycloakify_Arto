@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import ArtoIcon from "../../assets/ArtoIcon";
 import { I18n } from "../i18n";
 import { KcContext } from "../KcContext";
-import { StyledBox } from "./LoginPage";
+import { StyledBox } from "./Login";
 
 
 export default function Register(
@@ -52,6 +52,169 @@ export default function Register(
 
     return (
         <StyledBox>
+            <>
+            {/* Register Form */}
+                      <Box component="div" sx={{ mt: 3 }}>
+                        <Stack spacing={3}>
+                          <TextField
+                        fullWidth
+                        id="username"
+                        name="username"
+                        label={msgStr("username")}
+                        value={formik.values.username}
+                        onChange={formik.handleChange}
+                        sx={{
+                              '& .MuiOutlinedInput-root': {
+                                borderRadius: 2,
+                                '&.Mui-focused fieldset': {
+                                  borderColor: 'primary.main',
+                                },
+                              },
+                            }}
+                        error={formik.touched.username && Boolean(formik.errors.username)}
+                        helperText={formik.touched.username && formik.errors.username}
+                            slotProps={{
+                            input: {  
+                                startAdornment: (
+                                <InputAdornment position="start">
+                                  <Person color="action" />
+                                </InputAdornment>
+                            )
+                            }
+                        }}
+                    />
+            
+                          <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            value={registerData.email}
+                            onChange={(e) => setRegisterData({...registerData, email: e.target.value})}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <Mail color="action" />
+                                </InputAdornment>
+                              ),
+                            }}
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                borderRadius: 2,
+                                '&.Mui-focused fieldset': {
+                                  borderColor: 'primary.main',
+                                },
+                              },
+                            }}
+                          />
+            
+                          <TextField
+                            fullWidth
+                            label="Password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={registerData.password}
+                            onChange={(e) => setRegisterData({...registerData, password: e.target.value})}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <Lock color="action" />
+                                </InputAdornment>
+                              ),
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    edge="end"
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                              )
+                            }}
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                borderRadius: 2,
+                                '&.Mui-focused fieldset': {
+                                  borderColor: 'primary.main',
+                                },
+                              },
+                            }}
+                          />
+            
+                          <TextField
+                            fullWidth
+                            label="Conferma Password"
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            value={registerData.confirmPassword}
+                            onChange={(e) => setRegisterData({...registerData, confirmPassword: e.target.value})}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <Lock color="action" />
+                                </InputAdornment>
+                              ),
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    edge="end"
+                                  >
+                                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                              )
+                            }}
+                            sx={{
+                              '& .MuiOutlinedInput-root': {
+                                borderRadius: 2,
+                                '&.Mui-focused fieldset': {
+                                  borderColor: 'primary.main',
+                                },
+                              },
+                            }}
+                          />
+            
+                          <FormControlLabel
+                            control={<Checkbox required />}
+                            label={
+                              <Typography variant="body2" color="text.secondary">
+                                Accetto i{' '}
+                                <Link href="#" sx={{ color: 'primary.main' }}>
+                                  Termini di Servizio
+                                </Link>{' '}
+                                e la{' '}
+                                <Link href="#" sx={{ color: 'primary.main' }}>
+                                  Privacy Policy
+                                </Link>
+                              </Typography>
+                            }
+                          />
+            
+                          <Button
+                            fullWidth
+                            variant="contained"
+                            size="large"
+                            onClick={handleRegister}
+                            endIcon={<ArrowForward />}
+                            sx={{
+                              py: 2,
+                              borderRadius: 2,
+                              backgroundColor: 'primary.main',
+                              fontWeight: 600,
+                              fontSize: '1.1rem',
+                              '&:hover': {
+                                backgroundColor: 'primary.dark',
+                                transform: 'translateY(-2px)',
+                                boxShadow: 6
+                              },
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            Crea Account
+                          </Button>
+                        </Stack>
+                      </Box>
+                    )}
+            </>
             <Avatar sx={{ bgcolor: "primary.main", width: 70, height: 70, mb: 2 }}>
                 <ArtoIcon sx={{ width: 60, height: 60 }} />
             </Avatar>
