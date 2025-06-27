@@ -1,16 +1,13 @@
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { Box, IconButton, keyframes, Stack, useTheme } from "@mui/material";
+
 import type { ClassKey } from "keycloakify/login";
 import DefaultPage from "keycloakify/login/DefaultPage";
-import Template from "keycloakify/login/Template";
-import { Suspense, lazy } from "react";
-import { useAppTheme } from "../context/AppTheme";
-import type { KcContext } from "./KcContext";
-import LoginPage from "./pages/Login";
-import RegisterPage from "./pages/Register";
-import { useI18n } from "./i18n";
+import { lazy, Suspense } from "react";
 import ArtoTemplate from "./ArtoTemplate";
+import { useI18n } from "./i18n";
+import type { KcContext } from "./KcContext";
+import Template from "./ArtoTemplate";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const UserProfileFormFields = lazy(
     () => import("keycloakify/login/UserProfileFormFields")
@@ -22,57 +19,44 @@ export default function KcPage(props: { kcContext: KcContext }) {
     const { kcContext } = props;
 
     const { i18n } = useI18n({ kcContext });
-    const theme = useTheme();
-
-    const { toggleColorMode } = useAppTheme();
 
 
     return (
-
         <Suspense>
-    
-                {/* Background pattern */}
-                <Box
-                    sx={{
-                        position: "absolute",
-                        inset: 0,
-                        opacity: 0.05,
-                        backgroundImage: `radial-gradient(circle at 25% 25%, ${theme.palette.primary.main} 2px, transparent 2px)`,
-                        backgroundSize: "50px 50px",
-                        zIndex: 0
-                    }}
-                />
-                <Stack alignItems="flex-end">
-                    <IconButton onClick={toggleColorMode} color="inherit">
-                        {theme.palette.mode === "dark" ? (
-                            <Brightness7Icon />
-                        ) : (
-                            <Brightness4Icon />
-                        )}
-                    </IconButton>
-                </Stack>
+            
 
-                {(() => {
+            {/* <DefaultPage
+                kcContext={kcContext}
+                i18n={i18n}
+                classes={classes}
+                Template={ArtoTemplate}
+                doUseDefaultCss={false}
+                UserProfileFormFields={UserProfileFormFields}
+                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+            /> */}
+            {(() => {
                     switch (kcContext.pageId) {
                         case "login.ftl":
                             return (
-                                <LoginPage
+                                <Login
                                     kcContext={kcContext}
                                     i18n={i18n}
                                     classes={classes}
-                                    Template={Template}
+                                    Template={ArtoTemplate}
                                     doUseDefaultCss={false}
-                                ></LoginPage>
+                                    // UserProfileFormFields={UserProfileFormFields}
+                                    // doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+                                ></Login>
                             );
                         case "register.ftl":
                             return (
-                                <RegisterPage
+                                <Register
                                     kcContext={kcContext}
                                     i18n={i18n}
                                     classes={classes}
                                     Template={Template}
                                     doUseDefaultCss={false}
-                                ></RegisterPage>
+                                ></Register>
                             );
 
                         default:
@@ -82,7 +66,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
                                     i18n={i18n}
                                     classes={classes}
                                     Template={ArtoTemplate}
-                                    doUseDefaultCss={true}
+                                    doUseDefaultCss={false}
                                     UserProfileFormFields={UserProfileFormFields}
                                     doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                                 />
