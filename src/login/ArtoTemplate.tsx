@@ -6,6 +6,7 @@ import {
     Avatar,
     Box,
     Button,
+    Grid,
     IconButton,
     Menu,
     MenuItem,
@@ -28,8 +29,9 @@ import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 import ArtoIcon from "../assets/ArtoIcon";
 
-export const StyledBox = styled(Box)(({ theme }) => ({
-    display: "flex",
+export const StyledContainer = styled(Grid)(({ theme }) => ({
+    height: "100vh !important",
+    width: "100% !important",
     alignItems: "center",
     justifyContent: "center",
     "&::before": {
@@ -39,25 +41,14 @@ export const StyledBox = styled(Box)(({ theme }) => ({
     }
 }));
 
-export const StyledPaper = styled(Paper)(({ theme }) => ({
+export const StyledPaper = styled(Paper)(() => ({
     padding: 20,
     borderRadius: 4,
     position: "relative",
-    overflow: "hidden",
-    "&::before": {
-        content: '""',
-        position: "absolute",
-        top: -50,
-        left: -50,
-        width: 100,
-        height: 100,
-        borderRadius: "50%",
-        background: `linear-gradient(45deg, ${theme.palette.primary.main}30, transparent)`,
-        animation: "pulse 3s ease-in-out infinite"
-    }
+    overflow: "hidden"
 }));
 
-export default function Template(props: TemplateProps<KcContext, I18n>) {
+export default function ArtoTemplate(props: TemplateProps<KcContext, I18n>) {
     const {
         displayInfo = false,
         displayMessage = true,
@@ -112,9 +103,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 sx={{
                     position: "absolute",
                     inset: 0,
-                    opacity: 0.2,
-                    backgroundImage: `radial-gradient(circle at 25% 25%, ${theme.palette.primary.main} 2px, transparent 2px)`,
-                    backgroundSize: "50px 50px",
+                    opacity: 0.3,
+                    backgroundImage: "url('https://www.artetoken.it/wp-content/uploads/2024/04/ARTO-Immagine-copertina-scaled.webp')",
                     zIndex: 0
                 }}
             />
@@ -127,254 +117,281 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                     )}
                 </IconButton>
             </Stack>
-            <StyledBox>
-                <PulsingBlob />
 
-                <StyledPaper className={kcClsx("kcLoginClass")}>
-                    {/* Header */}
-                    <Box id="kc-header" className={kcClsx("kcHeaderClass")}>
-                        <Box
-                            id="kc-header-wrapper"
-                            className={kcClsx("kcHeaderWrapperClass")}
-                        >
-                            <Avatar
-                                sx={{
-                                    width: 65,
-                                    height: 65,
-                                    backgroundColor: `${theme.palette.primary.main}20`,
-                                    color: "primary.main",
-                                    mx: "auto",
-                                    mb: 2
-                                }}
-                            >
-                                <ArtoIcon sx={{ width: 55, height: 55 }} />
-                            </Avatar>
-                            <Typography
-                                component="span"
-                                dangerouslySetInnerHTML={{
-                                    __html: msg("loginTitleHtml", realm.displayNameHtml)
-                                }}
-                            />
-                        </Box>
-                    </Box>
-
-                    {/* Card */}
-                    <Box className={kcClsx("kcFormCardClass")}>
-                        <Box component="header" className={kcClsx("kcFormHeaderClass")}>
-                            {enabledLanguages.length > 1 && (
-                                <Box
-                                    className={kcClsx("kcLocaleMainClass")}
-                                    id="kc-locale"
+            <StyledContainer container>
+                <Grid
+                    display="flex"
+                    size={6}
+                    alignItems={"flex-end"}
+                    flexDirection={"row"}
+                ></Grid>
+                <Grid size={6} p={20}>
+                    <StyledPaper className={kcClsx("kcLoginClass")}>
+                        {enabledLanguages.length > 1 && (
+                            <Stack className={kcClsx("kcLocaleMainClass")} id="kc-locale">
+                                <Stack
+                                    id="kc-locale-wrapper"
+                                    className={kcClsx("kcLocaleWrapperClass")}
                                 >
-                                    <Box
-                                        id="kc-locale-wrapper"
-                                        className={kcClsx("kcLocaleWrapperClass")}
+                                    <Stack
+                                        alignItems={"flex-end"}
+                                        id="kc-locale-dropdown"
+                                        className={clsx(
+                                            "menu-button-links",
+                                            kcClsx("kcLocaleDropDownClass")
+                                        )}
                                     >
-                                        <Box
-                                            id="kc-locale-dropdown"
-                                            className={clsx(
-                                                "menu-button-links",
-                                                kcClsx("kcLocaleDropDownClass")
-                                            )}
-                                        >
-                                            <IconButton
-                                                tabIndex={1}
-                                                id="kc-current-locale-link"
-                                                aria-label={msgStr("languages")}
-                                                aria-haspopup="true"
-                                                aria-expanded={open ? "true" : "false"}
-                                                aria-controls="language-switch1"
-                                                onClick={e =>
-                                                    setAnchorEl(e.currentTarget)
-                                                }
-                                                size="small"
-                                            >
-                                                <LanguageIcon />
-                                                <Typography sx={{ ml: 1 }}>
-                                                    {currentLanguage.label}
-                                                </Typography>
-                                            </IconButton>
-                                            <Menu
-                                                anchorEl={anchorEl}
-                                                open={open}
-                                                onClose={() => setAnchorEl(null)}
-                                                id="language-switch1"
-                                                MenuListProps={{
-                                                    "aria-labelledby":
-                                                        "kc-current-locale-link",
-                                                    tabIndex: -1
-                                                }}
-                                            >
-                                                {enabledLanguages.map(
-                                                    ({ languageTag, label, href }, i) => (
-                                                        <MenuItem
-                                                            key={languageTag}
-                                                            component="a"
-                                                            href={href}
-                                                            selected={
-                                                                currentLanguage.languageTag ===
-                                                                languageTag
-                                                            }
-                                                            onClick={() =>
-                                                                setAnchorEl(null)
-                                                            }
-                                                            id={`language-${i + 1}`}
-                                                            className={kcClsx(
-                                                                "kcLocaleItemClass"
-                                                            )}
-                                                        >
-                                                            {label}
-                                                        </MenuItem>
-                                                    )
-                                                )}
-                                            </Menu>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                            )}
-                            {(() => {
-                                const node = !(
-                                    auth !== undefined &&
-                                    auth.showUsername &&
-                                    !auth.showResetCredentials
-                                ) ? (
-                                    <Typography component="h1" id="kc-page-title">
-                                        {headerNode}
-                                    </Typography>
-                                ) : (
-                                    <Box
-                                        id="kc-username"
-                                        className={kcClsx("kcFormGroupClass")}
-                                    >
-                                        <Typography
-                                            id="kc-attempted-username"
-                                            component="label"
-                                        >
-                                            {auth.attemptedUsername}
-                                        </Typography>
-                                        <Button
-                                            id="reset-login"
-                                            href={url.loginRestartFlowUrl}
-                                            aria-label={msgStr("restartLoginTooltip")}
+                                        <IconButton
+                                            tabIndex={1}
+                                            id="kc-current-locale-link"
+                                            aria-label={msgStr("languages")}
+                                            aria-haspopup="true"
+                                            aria-expanded={open ? "true" : "false"}
+                                            aria-controls="language-switch1"
+                                            onClick={e => setAnchorEl(e.currentTarget)}
                                             size="small"
-                                            sx={{ ml: 1 }}
                                         >
-                                            <span className="kc-login-tooltip">
-                                                {/* Icona custom, puoi aggiungere qui una icona MUI se vuoi */}
-                                                <span
-                                                    className={kcClsx("kcResetFlowIcon")}
-                                                ></span>
-                                                <span className="kc-tooltip-text">
-                                                    {msg("restartLoginTooltip")}
-                                                </span>
-                                            </span>
-                                        </Button>
-                                    </Box>
-                                );
-
-                                if (displayRequiredFields) {
-                                    return (
-                                        <Box className={kcClsx("kcContentWrapperClass")}>
-                                            <Box
-                                                className={clsx(
-                                                    kcClsx("kcLabelWrapperClass"),
-                                                    "subtitle"
-                                                )}
-                                            >
-                                                <Typography
-                                                    component="span"
-                                                    className="subtitle"
-                                                >
-                                                    <span className="required">*</span>
-                                                    {msg("requiredFields")}
-                                                </Typography>
-                                            </Box>
-                                            <Box className="col-md-10">{node}</Box>
-                                        </Box>
-                                    );
-                                }
-
-                                return node;
-                            })()}
-                        </Box>
-                        <Box id="kc-content">
-                            <Box id="kc-content-wrapper">
-                                {/* Alert messages */}
-                                {displayMessage &&
-                                    message !== undefined &&
-                                    (message.type !== "warning" ||
-                                        !isAppInitiatedAction) && (
-                                        <Alert
-                                            className={clsx(
-                                                `alert-${message.type}`,
-                                                kcClsx("kcAlertClass"),
-                                                `pf-m-${message?.type === "error" ? "danger" : message.type}`
+                                            <LanguageIcon />
+                                            <Typography sx={{ ml: 1 }}>
+                                                {currentLanguage.label}
+                                            </Typography>
+                                        </IconButton>
+                                        <Menu
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={() => setAnchorEl(null)}
+                                            id="language-switch1"
+                                            MenuListProps={{
+                                                "aria-labelledby":
+                                                    "kc-current-locale-link",
+                                                tabIndex: -1
+                                            }}
+                                        >
+                                            {enabledLanguages.map(
+                                                ({ languageTag, label, href }, i) => (
+                                                    <MenuItem
+                                                        key={languageTag}
+                                                        component="a"
+                                                        href={href}
+                                                        selected={
+                                                            currentLanguage.languageTag ===
+                                                            languageTag
+                                                        }
+                                                        onClick={() => setAnchorEl(null)}
+                                                        id={`language-${i + 1}`}
+                                                        className={kcClsx(
+                                                            "kcLocaleItemClass"
+                                                        )}
+                                                    >
+                                                        {label}
+                                                    </MenuItem>
+                                                )
                                             )}
-                                            severity={
-                                                message.type === "error"
-                                                    ? "error"
-                                                    : message.type === "warning"
-                                                      ? "warning"
-                                                      : message.type === "success"
-                                                        ? "success"
-                                                        : "info"
-                                            }
-                                            icon={false}
-                                            sx={{ mb: 2 }}
+                                        </Menu>
+                                    </Stack>
+                                </Stack>
+                            </Stack>
+                        )}
+                        {/* Header */}
+                        <Stack
+                            id="kc-header"
+                            className={kcClsx("kcHeaderClass")}
+                            spacing={5}
+                        >
+                            <Stack
+                                id="kc-header-wrapper"
+                                className={kcClsx("kcHeaderWrapperClass")}
+                                alignItems={"center"}
+                            >
+                                <ArtoIcon
+                                    sx={{
+                                        height: "70px",
+                                        width: "70px",
+                                        color: "primary.main"
+                                    }}
+                                />
+
+                                <Typography
+                                    variant="h4"
+                                    component="span"
+                                    textAlign={"center"}
+                                >
+                                    {msg("loginTitleHtml", realm.displayNameHtml)}
+                                </Typography>
+                            </Stack>
+                        </Stack>
+
+                        {/* Card */}
+                        <Stack className={kcClsx("kcFormCardClass")} spacing={5}>
+                            <Box
+                                component="header"
+                                className={kcClsx("kcFormHeaderClass")}
+                            >
+                                {(() => {
+                                    const node = !(
+                                        auth !== undefined &&
+                                        auth.showUsername &&
+                                        !auth.showResetCredentials
+                                    ) ? (
+                                        <Typography
+                                            component="h1"
+                                            id="kc-page-title"
+                                            textAlign="center"
                                         >
-                                            <span
-                                                className={kcClsx("kcAlertTitleClass")}
-                                                dangerouslySetInnerHTML={{
-                                                    __html: kcSanitize(message.summary)
-                                                }}
-                                            />
-                                        </Alert>
-                                    )}
-                                {children}
-                                {auth !== undefined && auth.showTryAnotherWayLink && (
-                                    <form
-                                        id="kc-select-try-another-way-form"
-                                        action={url.loginAction}
-                                        method="post"
-                                    >
-                                        <Box className={kcClsx("kcFormGroupClass")}>
-                                            <input
-                                                type="hidden"
-                                                name="tryAnotherWay"
-                                                value="on"
-                                            />
-                                            <Button
-                                                href="#"
-                                                id="try-another-way"
-                                                onClick={() => {
-                                                    document.forms[
-                                                        "kc-select-try-another-way-form" as never
-                                                    ].submit();
-                                                    return false;
-                                                }}
-                                                size="small"
+                                            {headerNode}
+                                        </Typography>
+                                    ) : (
+                                        <Box
+                                            id="kc-username"
+                                            className={kcClsx("kcFormGroupClass")}
+                                        >
+                                            <Typography
+                                                id="kc-attempted-username"
+                                                component="label"
                                             >
-                                                {msg("doTryAnotherWay")}
+                                                {auth.attemptedUsername}
+                                            </Typography>
+                                            <Button
+                                                id="reset-login"
+                                                href={url.loginRestartFlowUrl}
+                                                aria-label={msgStr("restartLoginTooltip")}
+                                                size="small"
+                                                sx={{ ml: 1 }}
+                                            >
+                                                <span className="kc-login-tooltip">
+                                                    {/* Icona custom, puoi aggiungere qui una icona MUI se vuoi */}
+                                                    <span
+                                                        className={kcClsx(
+                                                            "kcResetFlowIcon"
+                                                        )}
+                                                    ></span>
+                                                    <span className="kc-tooltip-text">
+                                                        {msg("restartLoginTooltip")}
+                                                    </span>
+                                                </span>
                                             </Button>
                                         </Box>
-                                    </form>
-                                )}
-                                {socialProvidersNode}
-                                {displayInfo && (
-                                    <Box id="kc-info" className={kcClsx("kcSignUpClass")}>
-                                        <Box
-                                            id="kc-info-wrapper"
-                                            className={kcClsx("kcInfoAreaWrapperClass")}
-                                        >
-                                            {infoNode}
-                                        </Box>
-                                    </Box>
-                                )}
+                                    );
+
+                                    if (displayRequiredFields) {
+                                        return (
+                                            <Box
+                                                className={kcClsx(
+                                                    "kcContentWrapperClass"
+                                                )}
+                                            >
+                                                <Box
+                                                    className={clsx(
+                                                        kcClsx("kcLabelWrapperClass"),
+                                                        "subtitle"
+                                                    )}
+                                                >
+                                                    <Typography
+                                                        component="span"
+                                                        className="subtitle"
+                                                    >
+                                                        <span className="required">
+                                                            *
+                                                        </span>
+                                                        {msg("requiredFields")}
+                                                    </Typography>
+                                                </Box>
+                                                <Box className="col-md-10">{node}</Box>
+                                            </Box>
+                                        );
+                                    }
+
+                                    return node;
+                                })()}
                             </Box>
-                        </Box>
-                    </Box>
-                </StyledPaper>
-            </StyledBox>
+                            <Box id="kc-content">
+                                <Box id="kc-content-wrapper">
+                                    {/* Alert messages */}
+                                    {displayMessage &&
+                                        message !== undefined &&
+                                        (message.type !== "warning" ||
+                                            !isAppInitiatedAction) && (
+                                            <Alert
+                                                className={clsx(
+                                                    `alert-${message.type}`,
+                                                    kcClsx("kcAlertClass"),
+                                                    `pf-m-${message?.type === "error" ? "danger" : message.type}`
+                                                )}
+                                                severity={
+                                                    message.type === "error"
+                                                        ? "error"
+                                                        : message.type === "warning"
+                                                          ? "warning"
+                                                          : message.type === "success"
+                                                            ? "success"
+                                                            : "info"
+                                                }
+                                                icon={false}
+                                                sx={{ mb: 2 }}
+                                            >
+                                                <span
+                                                    className={kcClsx(
+                                                        "kcAlertTitleClass"
+                                                    )}
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: kcSanitize(
+                                                            message.summary
+                                                        )
+                                                    }}
+                                                />
+                                            </Alert>
+                                        )}
+                                    {children}
+                                    {auth !== undefined && auth.showTryAnotherWayLink && (
+                                        <form
+                                            id="kc-select-try-another-way-form"
+                                            action={url.loginAction}
+                                            method="post"
+                                        >
+                                            <Box className={kcClsx("kcFormGroupClass")}>
+                                                <input
+                                                    type="hidden"
+                                                    name="tryAnotherWay"
+                                                    value="on"
+                                                />
+                                                <Button
+                                                    href="#"
+                                                    id="try-another-way"
+                                                    onClick={() => {
+                                                        document.forms[
+                                                            "kc-select-try-another-way-form" as never
+                                                        ].submit();
+                                                        return false;
+                                                    }}
+                                                    size="small"
+                                                >
+                                                    {msg("doTryAnotherWay")}
+                                                </Button>
+                                            </Box>
+                                        </form>
+                                    )}
+                                    {socialProvidersNode}
+                                    {displayInfo && (
+                                        <Box
+                                            id="kc-info"
+                                            className={kcClsx("kcSignUpClass")}
+                                        >
+                                            <Box
+                                                id="kc-info-wrapper"
+                                                className={kcClsx(
+                                                    "kcInfoAreaWrapperClass"
+                                                )}
+                                            >
+                                                {infoNode}
+                                            </Box>
+                                        </Box>
+                                    )}
+                                </Box>
+                            </Box>
+                        </Stack>
+                    </StyledPaper>
+                </Grid>
+            </StyledContainer>
         </>
     );
 }
