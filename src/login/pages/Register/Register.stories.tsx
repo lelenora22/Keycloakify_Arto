@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { createKcPageStory } from "../KcPageStory";
+import { createKcPageStory } from "../../KcPageStory";
 import type { Attribute } from "keycloakify/login";
 
 const { KcPageStory } = createKcPageStory({ pageId: "register.ftl" });

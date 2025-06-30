@@ -3,7 +3,6 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import LanguageIcon from "@mui/icons-material/Language";
 import {
     Alert,
-    Avatar,
     Box,
     Button,
     Grid,
@@ -23,11 +22,10 @@ import type { TemplateProps } from "keycloakify/login/TemplateProps";
 import { clsx } from "keycloakify/tools/clsx";
 import { useSetClassName } from "keycloakify/tools/useSetClassName";
 import { useEffect, useState } from "react";
+import ArtoIcon from "../assets/ArtoIcon";
 import { useAppTheme } from "../context/AppTheme";
-import PulsingBlob from "./components/PulsingBlob";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
-import ArtoIcon from "../assets/ArtoIcon";
 
 export const StyledContainer = styled(Grid)(({ theme }) => ({
     height: "100vh !important",
@@ -280,23 +278,22 @@ export default function ArtoTemplate(props: TemplateProps<KcContext, I18n>) {
                                                     "kcContentWrapperClass"
                                                 )}
                                             >
-                                                <Box
+                                                <Stack
                                                     className={clsx(
                                                         kcClsx("kcLabelWrapperClass"),
                                                         "subtitle"
                                                     )}
                                                 >
+                                                    <Box className="col-md-10">{node}</Box>
                                                     <Typography
                                                         component="span"
                                                         className="subtitle"
-                                                    >
-                                                        <span className="required">
-                                                            *
-                                                        </span>
-                                                        {msg("requiredFields")}
+                                                        
+                                                    >                                                
+                                                        *{msg("requiredFields")}
                                                     </Typography>
-                                                </Box>
-                                                <Box className="col-md-10">{node}</Box>
+                                                </Stack>
+                                                
                                             </Box>
                                         );
                                     }

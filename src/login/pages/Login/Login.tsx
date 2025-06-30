@@ -1,44 +1,14 @@
 import { ArrowForward } from "@mui/icons-material";
 import { Box, Button, Checkbox, Divider, FormControlLabel, Link, Stack, TextField, Typography } from "@mui/material";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { getKcClsx, KcClsx } from "keycloakify/login/lib/kcClsx";
+import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { PageProps } from "keycloakify/login/pages/PageProps";
 import { clsx } from "keycloakify/tools/clsx";
-import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
 import { useState } from "react";
-import { I18n } from "../i18n";
-import { KcContext } from "../KcContext";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-function PasswordWrapper(props: { kcClsx: KcClsx; i18n: I18n; passwordInputId: string; children: JSX.Element }) {
-    const { kcClsx, i18n, passwordInputId, children } = props;
-    const { isPasswordRevealed, toggleIsPasswordRevealed } = useIsPasswordRevealed({ passwordInputId: "password" });
+import { I18n } from "../../i18n";
+import { KcContext } from "../../KcContext";
+import PasswordWrapper from "../PasswordWrapper";
 
-    const { msgStr } = i18n;
-
-    return (
-        <Stack direction="row" className={kcClsx("kcInputGroup")}>
-            {children}
-            <Button
-                variant="outlined"
-                type="button"
-                className={kcClsx("kcFormPasswordVisibilityButtonClass")}
-                aria-label={msgStr(isPasswordRevealed ? "hidePassword" : "showPassword")}
-                aria-controls={passwordInputId}
-                onClick={toggleIsPasswordRevealed}
-                sx={{
-                    mt: 1,
-                    mb: 2,
-                    "& .MuiOutlinedInput-root": {
-                        borderRadius: 2
-                    }
-                }}
-            >
-                {isPasswordRevealed ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </Button>
-        </Stack>
-    );
-}
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -217,8 +187,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         error={messagesPerField.existsError("username", "password")}
                                         fullWidth
                                         sx={{
-                                            mt: 1,
-                                            mb: 2,
                                             "& .MuiOutlinedInput-root": {
                                                 borderRadius: 2
                                             }
