@@ -9,6 +9,7 @@ import {
     MenuItem,
     Radio,
     Select,
+    Stack,
     TextField,
     Typography
 } from "@mui/material";
@@ -80,7 +81,7 @@ export default function UserProfileFormFields(
     const groupNameRef = { current: "" };
 
     return (
-        <>
+        <Stack gap={5}>
             {formFieldStates.map(({ attribute, displayableErrors, valueOrValues }) => {
                 return (
                     <Fragment key={attribute.name}>
@@ -110,10 +111,10 @@ export default function UserProfileFormFields(
                                         ? "none"
                                         : undefined
                             }}
-                            fullWidth
+                            fullWidth            
                         >
 
-                            <Box className={kcClsx("kcInputWrapperClass")}>
+                            <Stack className={kcClsx("kcInputWrapperClass")} >
                                 {attribute.annotations.inputHelperTextBefore && (
                                     <FormHelperText
                                         className={kcClsx("kcInputHelperTextBeforeClass")}
@@ -161,12 +162,12 @@ export default function UserProfileFormFields(
                                     />
                                 )}
                                 {/* NOTE: Downloading of html5DataAnnotations scripts is done in the useUserProfileForm hook */}
-                            </Box>
+                            </Stack>
                         </FormControl>
                     </Fragment>
                 );
             })}
-        </>
+        </Stack>
     );
 }
 

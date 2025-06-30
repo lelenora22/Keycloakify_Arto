@@ -8,6 +8,7 @@ import { useState } from "react";
 import { I18n } from "../../i18n";
 import { KcContext } from "../../KcContext";
 import TermsAcceptance from "./TermsAcceptance";
+import { ArrowForward } from "@mui/icons-material";
 
 type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -15,15 +16,31 @@ type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I
 };
 
 export default function Register(props: RegisterProps) {
-    const { kcContext, i18n, doUseDefaultCss, Template, classes, UserProfileFormFields, doMakeUserConfirmPassword } = props;
+    const {
+        kcContext,
+        i18n,
+        doUseDefaultCss,
+        Template,
+        classes,
+        UserProfileFormFields,
+        doMakeUserConfirmPassword
+    } = props;
 
     const { kcClsx } = getKcClsx({
         doUseDefaultCss,
         classes
     });
 
-    const { messageHeader, url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } =
-        kcContext;
+    const {
+        messageHeader,
+        url,
+        messagesPerField,
+        recaptchaRequired,
+        recaptchaVisible,
+        recaptchaSiteKey,
+        recaptchaAction,
+        termsAcceptanceRequired
+    } = kcContext;
 
     const { msg, msgStr, advancedMsg } = i18n;
 
@@ -36,11 +53,22 @@ export default function Register(props: RegisterProps) {
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            headerNode={messageHeader !== undefined ? advancedMsg(messageHeader) : msg("registerTitle")}
+            headerNode={
+                messageHeader !== undefined
+                    ? advancedMsg(messageHeader)
+                    : msg("registerTitle")
+            }
             displayMessage={messagesPerField.exists("global")}
             displayRequiredFields
         >
-            <Stack component="form"  id="kc-register-form" className={kcClsx("kcFormClass")} action={url.registrationAction} method="post">
+            <Stack
+                component="form"
+                id="kc-register-form"
+                className={kcClsx("kcFormClass")}
+                action={url.registrationAction}
+                method="post"
+                spacing={5}
+            >
                 <UserProfileFormFields
                     kcContext={kcContext}
                     i18n={i18n}
@@ -57,30 +85,58 @@ export default function Register(props: RegisterProps) {
                         onAreTermsAcceptedValueChange={setAreTermsAccepted}
                     />
                 )}
-                {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
-                    <Stack className="form-group" alignItems={"center"} sx={{ backgroundColor: "theme.palette.background.paper" }}>
-                        <Box className={kcClsx("kcInputWrapperClass")}>
-                            <Box className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey} data-action={recaptchaAction} />
-                        </Box>
-                    </Stack>
-                )}
-                <Box className={kcClsx("kcFormGroupClass")}>
-                    <Box id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                {recaptchaRequired &&
+                    (recaptchaVisible || recaptchaAction === undefined) && (
+                        <Stack
+                            className="form-group"
+                            alignItems={"center"}
+                            sx={{ backgroundColor: "theme.palette.background.paper" }}
+                        >
+                            <Box className={kcClsx("kcInputWrapperClass")}>
+                                <Box
+                                    className="g-recaptcha"
+                                    data-size="compact"
+                                    data-sitekey={recaptchaSiteKey}
+                                    data-action={recaptchaAction}
+                                />
+                            </Box>
+                        </Stack>
+                    )}
+                <Stack className={kcClsx("kcFormGroupClass")} spacing={5}>
+                    <Stack
+                        id="kc-form-options"
+                        className={kcClsx("kcFormOptionsClass")}
+                        alignItems={"flex-end"}
+                    >
                         <Box className={kcClsx("kcFormOptionsWrapperClass")}>
                             <Link href={url.loginUrl}>{msg("backToLogin")}</Link>
                         </Box>
-                    </Box>
+                    </Stack>
 
-                    {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (
-                        <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                    {recaptchaRequired &&
+                    !recaptchaVisible &&
+                    recaptchaAction !== undefined ? (
+                        <Box
+                            id="kc-form-buttons"
+                            className={kcClsx("kcFormButtonsClass")}
+                        >
                             <Button
                                 className={clsx(
-                                    kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass"),
+                                    kcClsx(
+                                        "kcButtonClass",
+                                        "kcButtonPrimaryClass",
+                                        "kcButtonBlockClass",
+                                        "kcButtonLargeClass"
+                                    ),
                                     "g-recaptcha"
                                 )}
                                 data-sitekey={recaptchaSiteKey}
                                 data-callback={() => {
-                                    (document.getElementById("kc-register-form") as HTMLFormElement).submit();
+                                    (
+                                        document.getElementById(
+                                            "kc-register-form"
+                                        ) as HTMLFormElement
+                                    ).submit();
                                 }}
                                 data-action={recaptchaAction}
                                 type="submit"
@@ -91,19 +147,36 @@ export default function Register(props: RegisterProps) {
                             </Button>
                         </Box>
                     ) : (
-                        <Box id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                        <Box
+                            id="kc-form-buttons"
+                            className={kcClsx("kcFormButtonsClass")}
+                        >
                             <Button
-                                disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)}
-                                className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
+                                disabled={
+                                    !isFormSubmittable ||
+                                    (termsAcceptanceRequired && !areTermsAccepted)
+                                }
+                                className={kcClsx(
+                                    "kcButtonClass",
+                                    "kcButtonPrimaryClass",
+                                    "kcButtonBlockClass",
+                                    "kcButtonLargeClass"
+                                )}
                                 type="submit"
                                 fullWidth
                                 variant="contained"
+                                endIcon={<ArrowForward />}
+                                sx={{
+                                    borderRadius: 2,
+                                    fontWeight: 600,
+                                    fontSize: "1.1rem"
+                                }}
                             >
                                 {msgStr("doRegister")}
                             </Button>
                         </Box>
                     )}
-                </Box>
+                </Stack>
             </Stack>
         </Template>
     );
